@@ -31,9 +31,27 @@ class Crawler:
         return url.format(quote(texto))
 
 
+    def converte(self, txt):
+        return float(re.sub(',', '.', txt))
+
 
     def chutar_preco1(self, texto):
-        return re.findall('R\$\d+\,\d+', texto.split('Capa comum')[1])[0]
+        print()
+        print()
+        print()
+        print()
+        print("texto original", texto)
+        txt = re.findall('R\$(\d+\,?\d*)', texto)
+        print("matched txt", txt)
+
+        if txt:
+            f = min(self.converte(t) for t in txt)
+        else:
+            f = 0.0
+
+        print("result", f)
+
+        return f
 
 
     def procura(self, texto):
@@ -48,7 +66,3 @@ class Crawler:
 
     def __del__(self):
         self.driver.close()
-
-c = Crawler()
-u = c.procura("LOPES, Maura Corcini. Surdez & educação. Autêntica, 2017.")
-print(u)
