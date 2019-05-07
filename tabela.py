@@ -23,5 +23,5 @@ precos = {}
 
 for index, book in groups.iterrows():
     ref = book["REFERENCIA_ORDENADA"]
-    print(ref, book)
     precos = crawler.procura(ref)
+    print(ref, book)
