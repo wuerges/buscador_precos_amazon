@@ -36,32 +36,24 @@ class Crawler:
 
 
     def chutar_preco1(self, texto):
-        print()
-        print()
-        print()
-        print()
-        print("texto original", texto)
+        # print()
+        # print()
+        # print()
+        # print()
+        # print("texto original", texto)
         txt = re.findall('R\$(\d+\,?\d*)', texto)
-        print("matched txt", txt)
-
-        if txt:
-            f = min(self.converte(t) for t in txt)
-        else:
-            f = 0.0
-
-        print("result", f)
-
-        return f
+        return [x for x in (self.converte(t) for t in txt) if x > 0]
 
 
     def procura(self, texto):
         u = self.cria_url(texto)
-        preco = "R$0,00"
+        preco = [10000]
         try:
             html = self.ler_url(u)
             preco = self.chutar_preco1(html)
         except:
-            traceback.print_exc()
+            with open("debug.log", "a") as f:
+                traceback.print_exc(f)
         return preco
 
     def __del__(self):

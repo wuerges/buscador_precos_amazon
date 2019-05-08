@@ -1,10 +1,18 @@
 import pandas as pd
 import sys
 import procurar
+import pickle
 
 sheets = []
 
-for arg in sys.argv[1:]:
+precos = {}
+try:
+    with open(sys.argv[1], "rb") as f:
+        precos = pickle.load(f)
+except:
+    print("Failed to load pickle, creating a new dict")
+
+for arg in sys.argv[2:]:
     sheet = pd.read_csv(arg)
     sheet["Curso"] = arg
     sheets.append(sheet)
@@ -17,11 +25,14 @@ groups = groups.sort_values(by='contagem')
 
 crawler = procurar.Crawler()
 
-print(groups)
-
-precos = {}
-
 for index, book in groups.iterrows():
     ref = book["REFERENCIA_ORDENADA"]
-    precos = crawler.procura(ref)
-    print(ref, book)
+    if not ref in precos:
+        print("adicionando", ref)
+        pi = crawler.procura(ref)
+        precos[ref] = pi
+    else:
+        print("pulando", ref)
+
+with open(sys.argv[1], "wb") as f:
+    pickle.dump(precos, f)
