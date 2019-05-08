@@ -2,3 +2,5 @@ geckodriver.log
 data/*
 __pycache__/*
 anexos/*
+precos.pic
+*.log
