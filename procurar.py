@@ -7,8 +7,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-import traceback
 import re
+
+import logging
+logging.basicConfig(filename='exceptions.log', level=logging.DEBUG)
+import traceback
 
 
 class Crawler:
@@ -52,8 +55,7 @@ class Crawler:
             html = self.ler_url(u)
             preco = self.chutar_preco1(html)
         except:
-            with open("debug.log", "a") as f:
-                traceback.print_exc(f)
+            logging.debug(traceback.format_exc())
         return preco
 
     def __del__(self):

@@ -34,5 +34,5 @@ for index, book in groups.iterrows():
     else:
         print("pulando", ref)
 
-with open(sys.argv[1], "wb") as f:
-    pickle.dump(precos, f)
+    with open(sys.argv[1], "wb") as f:
+        pickle.dump(precos, f)
